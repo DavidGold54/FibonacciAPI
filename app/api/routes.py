@@ -1,17 +1,18 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 
-from app.models.response import Response
 from app.services.fibonacci import calculate_fibonacci
 from app.utils.validators import validate_positive_integer
 
 
 router = APIRouter()
 
-@router.get("/fib", response_model=Response, status_code=status.HTTP_200_OK)
-def get_fibonacci(n: int):
+@router.get("/fib", response_model=JSONResponse)
+def get_fibonacci(n: str) -> JSONResponse:
     try:
         n = validate_positive_integer(n)
-        result = calculate_fibonacci(n)
-        return Response(result=result)
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        content = {"result": calculate_fibonacci(n)}
+        return JSONResponse(content, status_code=200)
+    except ValueError:
+        content = {"status": 400, "message": "Bad request."}
+        return JSONResponse(content, status_code=400)

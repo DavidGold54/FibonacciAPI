@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 
 from app.api.routes import router
 
@@ -11,6 +12,7 @@ app = FastAPI(
 
 app.include_router(router, prefix="/api/v1")
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Fibonacci API"}
+@app.get("/", response_class=JSONResponse)
+def read_root() -> JSONResponse:
+    content = {"message": "Welcome to the Fibonacci API"}
+    return JSONResponse(content)
