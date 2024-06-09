@@ -7,7 +7,7 @@ from app.utils.validators import validate_positive_integer
 
 router = APIRouter()
 
-@router.get("/fib", response_model=JSONResponse)
+@router.get("/fib", response_class=JSONResponse)
 def get_fibonacci(n: str) -> JSONResponse:
     try:
         n = validate_positive_integer(n)
