@@ -1,4 +1,4 @@
-# FibonacciAPI
+# fib_api
 
 FastAPIで構築されたフィボナッチ数列を計算するためのシンプルなRESTful APIです。
 このAPIはHerokuにデプロイされており、以下のURLからアクセス可能です。
